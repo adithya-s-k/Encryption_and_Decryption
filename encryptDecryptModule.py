@@ -8,32 +8,26 @@ def reverseDecrypt(inputMessage):
     reversStr = strInput[::-1]
     return str(reversStr)
 
-def caesarCipherEncrypt(key, message):
-    message = message.upper()
-    alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    result = ""
-
-    for letter in message:
-        if letter in alpha: #if the letter is actually a letter
-            #find the corresponding ciphertext letter in the alphabet
-            letter_index = (alpha.find(letter) + key) % len(alpha)
-
-            result = result + alpha[letter_index]
+def caeserCipherEncrypt(string, shift):
+    cipher = ''
+    for char in string:
+        if char==' ':
+            cipher=cipher+' '
+        elif char.isupper():
+            cipher = cipher + chr((ord(char) + shift - 65) % 26 + 65)
         else:
-            result = result + letter
+            cipher = cipher + chr((ord(char) + shift - 97) % 26 + 97)
+    return str(cipher)
 
-    return result
-
-def caesarCipherDecrypt(key, message):
-    message = message.upper()
-    alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    result = ""
-
-    for letter in message:
-        if letter in alpha: #if the letter is actually a letter
-            #find the corresponding ciphertext letter in the alphabet
-            letter_index = (alpha.find(letter) - key) % len(alpha)
-
-            result = result + alpha[letter_index]
+def caeserCipherDecrypt(string, shift):
+    cipher = ''
+    shift = -shift
+    for char in string:
+        if char==' ':
+            cipher=cipher+' '
+        elif char.isupper():
+            cipher = cipher + chr((ord(char) + shift - 65) % 26 + 65)
         else:
-            result = result + letter
+            cipher = cipher + chr((ord(char) + shift - 97) % 26 + 97)
+    return str(cipher)
+
