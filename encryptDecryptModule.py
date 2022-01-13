@@ -65,10 +65,8 @@ def pydesDecrypt(msg2):
     return str((bytes(lmao, 'utf-8')).decode("utf-8"))
 
 
-print(pydesEncrypt
-        (caeserCipherEncrypt
-            (reverseEncrypt("message"),10)
-        ))
-encrypt_message = (pydesEncrypt(base64Encryption(caeserCipherEncrypt(reverseEncrypt("message"),10))))
-
+encrypt_message = (pydesEncrypt(base64Encryption(caeserCipherEncrypt(reverseEncrypt("koushal gayhodhfosdhf"),10))))
 print(reverseDecrypt(caeserCipherDecrypt(base64Decryption(pydesDecrypt(encrypt_message)),10)))
+
+
+
