@@ -1,61 +1,121 @@
+# import tkinter module
 from tkinter import *
-# from tkinter.ttk import *
-# import tkinter.ttk as ttk
-import tkinter as tk
-import tkinter.font as font
-from PIL import Image, ImageTk
+# import other necessery modules
+import random
+# modules for encryption and decryption
+import base64
+import onetimepad
+import pyDes
+import encryptDecryptModule
 
-root = tk.Tk(className='tab1')
-root.geometry("1910x1020")
-root.minsize(1910,1020)
-root.maxsize(1910,1020)
+# creating root object
+root = Tk()
 
-canvas = Canvas(root, width = 1900, height = 1060)
-canvas.pack()
+# defining size of window
+root.geometry("1200x6000")
 
-def roundPolygon(x, y, sharpness, **kwargs):
+# setting up the title of window
+root.title("Message Encryption and Decryption")
 
-    # The sharpness here is just how close the sub-points
-    # are going to be to the vertex. The more the sharpness,
-    # the more the sub-points will be closer to the vertex.
-    # (This is not normalized)
-    if sharpness < 2:
-        sharpness = 2
+Tops = Frame(root, width=1600, relief=SUNKEN)
+Tops.pack(side=TOP)
 
-    ratioMultiplier = sharpness - 1
-    ratioDividend = sharpness
+f1 = Frame(root, width=800, relief=SUNKEN)
+f1.pack(side=LEFT)
 
-    # Array to store the points
-    points = []
+lblInfo = Label(Tops, font=('helvetica', 50, 'bold'),
+                text="MULTI-LAYERED \n ENCRYPTION AND DECRYPTION",
+                fg="Black", bd=10, anchor='w')
 
-    # Iterate over the x points
-    for i in range(len(x)):
-        # Set vertex
-        points.append(x[i])
-        points.append(y[i])
+lblInfo.grid(row=0, column=0)
 
-        # If it's not the last point
-        if i != (len(x) - 1):
-            # Insert submultiples points. The more the sharpness, the more these points will be
-            # closer to the vertex. 
-            points.append((ratioMultiplier*x[i] + x[i + 1])/ratioDividend)
-            points.append((ratioMultiplier*y[i] + y[i + 1])/ratioDividend)
-            points.append((ratioMultiplier*x[i + 1] + x[i])/ratioDividend)
-            points.append((ratioMultiplier*y[i + 1] + y[i])/ratioDividend)
-        else:
-            # Insert submultiples points.
-            points.append((ratioMultiplier*x[i] + x[0])/ratioDividend)
-            points.append((ratioMultiplier*y[i] + y[0])/ratioDividend)
-            points.append((ratioMultiplier*x[0] + x[i])/ratioDividend)
-            points.append((ratioMultiplier*y[0] + y[i])/ratioDividend)
-            # Close the polygon
-            points.append(x[0])
-            points.append(y[0])
+# Initializing variables
+Msg = StringVar()
+mode = StringVar()
+Result = StringVar()
 
-    return canvas.create_polygon(points, **kwargs, smooth=TRUE)
+# labels for the message
+lblMsg = Label(f1, font=('arial', 16, 'bold'),
+                text="MESSAGE", bd=16, anchor="w")
 
-my_rectangle = roundPolygon([20, 596, 596, 20], [30, 30, 990, 990], 20 , width=20, outline="#B5D9CD", fill="#B5D9CD")
+lblMsg.grid(row=1, column=0)
+# Entry box for the message
+txtMsg = Entry(f1, font=('arial', 16, 'bold'),
+                textvariable=Msg, bd=10, insertwidth=4,
+                bg="powder blue", justify='right')
 
-my_rectangle = roundPolygon([20, 596, 596, 20], [30, 30, 990, 990], 20 , width=20, outline="#B5D9CD", fill="#B5D9CD")
 
+txtMsg.grid(row=1, column=1)
+
+# labels for the mode
+lblmode = Label(f1, font=('arial', 16, 'bold'),
+                text="MODE(e for encrypt, d for decrypt)",
+                bd=16, anchor="w")
+
+lblmode.grid(row=3, column=0)
+# Entry box for the mode
+txtmode = Entry(f1, font=('arial', 16, 'bold'),
+                textvariable=mode, bd=10, insertwidth=4,
+                bg="powder blue",)
+
+txtmode.grid(row=3, column=1)
+
+# labels for the result
+lblResult = Label(f1, font=('arial', 16, 'bold'),
+                text="The Result-", bd=16, anchor="w")
+
+lblResult.grid(row=2, column=2)
+
+# Entry box for the result
+txtResult = Entry(f1, font=('arial', 16, 'bold'),
+                textvariable=Result, bd=10, insertwidth=4,
+                bg="powder blue",)
+
+txtResult.grid(row=2, column=3)
+
+
+def Results():
+    # print("Message= ", (Msg.get()))
+
+    msg = Msg.get()
+    m = mode.get()
+
+    if (m == 'e'):
+        Result.set(str(encryptDecryptModule.encoding(msg)))
+    else:
+        Result.set(encryptDecryptModule.decoding(msg))
+
+# exit function
+
+def qExit():
+    root.destroy()
+
+# Function to reset the window
+
+def Reset():
+
+    Msg.set("")
+    mode.set("")
+    Result.set("")
+
+
+# Show message button
+btnTotal = Button(f1, padx=16, pady=8, bd=16, fg="black",
+                    font=('arial', 16, 'bold'), width=10,
+                    text="Show Message", bg="powder blue",
+                    command=Results,borderwidth=0).grid(row=7, column=1)
+
+# Reset button
+btnReset = Button(f1, padx=16, pady=8, bd=16,
+                    fg="black", font=('arial', 16, 'bold'),
+                    width=10, text="Reset", bg="green",
+                    command=Reset).grid(row=7, column=2)
+
+# Exit button
+btnExit = Button(f1, padx=16, pady=8, bd=16,
+                    fg="black", font=('arial', 16, 'bold'),
+                    width=10, text="Exit", bg="red",
+                    command=qExit).grid(row=7, column=3)
+
+# keeps window alive
 root.mainloop()

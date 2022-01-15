@@ -134,14 +134,12 @@ def columnarDecrypt(cipher):
         return msg[: -null_count]
     return msg
 
-# Driver Code
-msg =input("Enter message to be encrypted :")
-cipher = columnarEncrypt(msg)
-print("Encrypted Message: {}".format(cipher))
-print("Decryped Message: {}".format(columnarDecrypt(cipher)))
 
-encrypt_message = (pydesEncrypt(base64Encryption(columnarEncrypt(caeserCipherEncrypt(reverseEncrypt("koushal gayhodhfosdhf"),10)))))
-print(reverseDecrypt(caeserCipherDecrypt(columnarDecrypt(base64Decryption(pydesDecrypt(encrypt_message))),10)))
+def encoding(message):
+    return((pydesEncrypt(base64Encryption(columnarEncrypt(caeserCipherEncrypt(reverseEncrypt(message),10))))))
+
+def decoding(message):
+    return((reverseDecrypt(caeserCipherDecrypt(columnarDecrypt(base64Decryption(pydesDecrypt(eval(message)))),10))))
 
 
 
