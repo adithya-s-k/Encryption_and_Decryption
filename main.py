@@ -4,15 +4,16 @@ from tkinter import *
 import random
 # modules for encryption and decryption
 import base64
+from turtle import width
 import onetimepad
 import pyDes
-import encryptDecryptModule
+import modules
 
 # creating root object
 root = Tk()
 
 # defining size of window
-root.geometry("1200x6000")
+root.geometry("1200x600")
 
 # setting up the title of window
 root.title("Message Encryption and Decryption")
@@ -22,6 +23,8 @@ Tops.pack(side=TOP)
 
 f1 = Frame(root, width=800, relief=SUNKEN)
 f1.pack(side=LEFT)
+
+
 
 lblInfo = Label(Tops, font=('helvetica', 50, 'bold'),
                 text="MULTI-LAYERED \n ENCRYPTION AND DECRYPTION",
@@ -42,8 +45,7 @@ lblMsg.grid(row=1, column=0)
 # Entry box for the message
 txtMsg = Entry(f1, font=('arial', 16, 'bold'),
                 textvariable=Msg, bd=10, insertwidth=4,
-                bg="powder blue", justify='right')
-
+                bg="powder blue",borderwidth=4)
 
 txtMsg.grid(row=1, column=1)
 
@@ -56,7 +58,7 @@ lblmode.grid(row=3, column=0)
 # Entry box for the mode
 txtmode = Entry(f1, font=('arial', 16, 'bold'),
                 textvariable=mode, bd=10, insertwidth=4,
-                bg="powder blue",)
+                bg="powder blue",borderwidth=4)
 
 txtmode.grid(row=3, column=1)
 
@@ -69,7 +71,7 @@ lblResult.grid(row=2, column=2)
 # Entry box for the result
 txtResult = Entry(f1, font=('arial', 16, 'bold'),
                 textvariable=Result, bd=10, insertwidth=4,
-                bg="powder blue",)
+                bg="powder blue",borderwidth=4)
 
 txtResult.grid(row=2, column=3)
 
@@ -81,9 +83,9 @@ def Results():
     m = mode.get()
 
     if (m == 'e'):
-        Result.set(str(encryptDecryptModule.encoding(msg)))
+        Result.set(str(modules.encoding(msg)))
     else:
-        Result.set(encryptDecryptModule.decoding(msg))
+        Result.set(modules.decoding(msg))
 
 # exit function
 
@@ -100,22 +102,22 @@ def Reset():
 
 
 # Show message button
-btnTotal = Button(f1, padx=16, pady=8, bd=16, fg="black",
+btnTotal = Button(f1, padx=16, pady=10, bd=16, fg="black",
                     font=('arial', 16, 'bold'), width=10,
                     text="Show Message", bg="powder blue",
-                    command=Results,borderwidth=0).grid(row=7, column=1)
+                    command=Results,borderwidth=4).grid(row=9, column=1,pady=20)
 
 # Reset button
-btnReset = Button(f1, padx=16, pady=8, bd=16,
+btnReset = Button(f1, padx=16, pady=10, bd=16,
                     fg="black", font=('arial', 16, 'bold'),
                     width=10, text="Reset", bg="green",
-                    command=Reset).grid(row=7, column=2)
+                    command=Reset,borderwidth=4).grid(row=9, column=2,pady=20)
 
 # Exit button
-btnExit = Button(f1, padx=16, pady=8, bd=16,
+btnExit = Button(f1, padx=16, pady=10, bd=16,
                     fg="black", font=('arial', 16, 'bold'),
                     width=10, text="Exit", bg="red",
-                    command=qExit).grid(row=7, column=3)
+                    command=qExit,borderwidth=4).grid(row=9, column=3,pady=20)
 
 # keeps window alive
 root.mainloop()

@@ -134,12 +134,8 @@ def columnarDecrypt(cipher):
         return msg[: -null_count]
     return msg
 
-
 def encoding(message):
     return((pydesEncrypt(base64Encryption(columnarEncrypt(caeserCipherEncrypt(reverseEncrypt(message),10))))))
 
 def decoding(message):
     return((reverseDecrypt(caeserCipherDecrypt(columnarDecrypt(base64Decryption(pydesDecrypt(eval(message)))),10))))
-
-
-
